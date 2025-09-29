@@ -14,14 +14,15 @@ const renderCategoryItem = (item) => {
     );
 };
 
-function CategoryScreen() {
+function CategoriesScreen() {
     return (
         <FlatList
             data={CATEGORIES}
             keyExtractor={(item) => item.id}
             renderItem={(itemData) => renderCategoryItem(itemData.item)}
+            numColumns={2}
         />
     );
 }
 
-export default CategoryScreen;
+export default CategoriesScreen;
