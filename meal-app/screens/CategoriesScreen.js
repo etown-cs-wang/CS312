@@ -5,16 +5,24 @@ import { CATEGORIES } from "../data/meal-data";
 import CategoryGridTile from "../components/CategoryGridTile";
 
 
-const renderCategoryItem = (item) => {
-    return (
-        <CategoryGridTile
-            title={item.title}
-            color={item.color}
-        />
-    );
-};
+function CategoriesScreen({ navigation }) {
 
-function CategoriesScreen() {
+    const renderCategoryItem = (item) => {
+        const pressHandler = () => {
+            navigation.navigate(
+                'MealsOverview',
+                { catId: item.id });
+        };
+
+        return (
+            <CategoryGridTile
+                title={item.title}
+                color={item.color}
+                onPress={pressHandler}
+            />
+        );
+    };
+
     return (
         <FlatList
             data={CATEGORIES}
