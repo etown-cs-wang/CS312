@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
 
 import FlatButton from '../ui/FlatButton';
 import AuthForm from './AuthForm';
 import { Colors } from '../../constants/styles';
 
 function AuthContent({ isLogin, onAuthenticate }) {
+
+    const navigator = useNavigation();
 
     const [credentialsInvalid, setCredentialsInvalid] = useState({
         email: false,
@@ -15,7 +18,13 @@ function AuthContent({ isLogin, onAuthenticate }) {
     });
 
     function switchAuthModeHandler() {
-        // Todo
+        // Todo - switch to the Signup Screen
+        if (isLogin) {
+            navigator.replace("Signup");
+        } else {
+            navigator.replace("Login");
+        }
+
     }
 
     function submitHandler(credentials) {
