@@ -1,6 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View, Text, Image, Platform, Pressable } from "react-native";
 
+import MealDetails from "./MealDetails";
+
 function MealItem({ id, title, imageUrl, duration, complexity, affordability }) {
     console.log(imageUrl);
 
@@ -27,11 +29,11 @@ function MealItem({ id, title, imageUrl, duration, complexity, affordability }) 
                     style={styles.image}
                 />
                 <Text style={styles.title}>{title}</Text>
-                <View style={styles.details}>
-                    <Text>{duration}</Text>
-                    <Text>{complexity.toUpperCase()}</Text>
-                    <Text>{affordability.toUpperCase()}</Text>
-                </View>
+                <MealDetails
+                    duration={duration}
+                    complexity={complexity}
+                    affordability={affordability}
+                />
             </Pressable>
         </View>
     );
@@ -66,11 +68,5 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 200,
         // margin: 8
-    },
-    details: {
-        marginBottom: 8,
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        paddingVertical: 8,
     }
 });
