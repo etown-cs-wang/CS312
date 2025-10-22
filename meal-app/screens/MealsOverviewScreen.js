@@ -2,11 +2,20 @@ import { StyleSheet, View, Text, FlatList } from 'react-native';
 
 import MealItem from '../components/MealItem';
 
+import { CATEGORIES } from '../data/meal-data';
 import { MEALS } from '../data/meal-data';
 import Meal from '../models/meal';
 
-function MealsOverviewScreen({ route }) {
+function MealsOverviewScreen({ route, navigation }) {
     const catId = route.params.catId;
+
+    const category = CATEGORIES.find(
+        (category) => category.id === catId
+    );
+
+    navigation.setOptions({
+        title: category.title,
+    });
 
 
     const displayMeals = MEALS.filter((mealItem) => {
@@ -16,10 +25,12 @@ function MealsOverviewScreen({ route }) {
     const renderCategoryItem = (itemData) => {
 
         const mealItemProps = {
+            id: itemData.item.id,
             title: itemData.item.title,
             imageUrl: itemData.item.imageUrl,
             duration: itemData.item.duration,
-            complexity: itemData.item.complexity
+            complexity: itemData.item.complexity,
+            affordability: itemData.item.affordability,
         };
 
         return (
