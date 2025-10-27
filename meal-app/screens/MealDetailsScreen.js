@@ -1,7 +1,9 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { useLayoutEffect } from "react";
+import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
 import { MEALS } from "../data/meal-data";
 import MealDetails from "../components/MealDetails";
 import Subtitle from "../components/Subtitle";
+import IconButton from "../components/IconButton";
 
 
 function MealDetailsScreen({ route, navigation }) {
@@ -12,8 +14,19 @@ function MealDetailsScreen({ route, navigation }) {
         (meal) => meal.id === mealId
     );
 
+    const headerButtonHandler = () => {
+        console.log("Pressed!");
+    }
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            title: selectedMeal.title,
+            headerRight: () => <IconButton icon="star" onPress={headerButtonHandler} />,
+        });
+    }, [navigation]);
+
     return (
-        <View>
+        <ScrollView>
             <Image
                 source={{ uri: selectedMeal.imageUrl }}
                 style={styles.image} />
@@ -28,16 +41,35 @@ function MealDetailsScreen({ route, navigation }) {
 
             <Subtitle>Ingredients:</Subtitle>
 
-            {selectedMeal.ingredients.map(
-                (ingredient) => (
-                    <Text key={ingredient}>{ingredient}</Text>
-                )
-            )};
+            <View>
+                {selectedMeal.ingredients.map(
+                    (ingredient) => (
+                        <Text
+                            key={ingredient}
+                            style={styles.listItem}
+                        >
+                            {ingredient}
+                        </Text>
+                    )
+                )}
+            </View>
 
             <Subtitle>Steps:</Subtitle>
+            <View>
+                {selectedMeal.steps.map(
+                    (step) => (
+                        <Text
+                            key={step}
+                            style={styles.listItem}
+                        >
+                            {step}
+                        </Text>
+                    )
+                )}
+            </View>
 
 
-        </View>
+        </ScrollView>
 
 
     );
@@ -63,5 +95,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         paddingVertical: 8,
+    },
+    listItem: {
+        borderRadius: 6,
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        marginVertical: 4,
+        marginHorizontal: 24,
+        backgroundColor: '#e2b497ff',
     }
 });
